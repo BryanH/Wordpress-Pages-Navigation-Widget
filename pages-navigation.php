@@ -111,6 +111,8 @@ wp_reset_postdata();
 ?>
 	<p>Link type [<?php _e( $instance['link_type'] ); ?>]</p>
 	<p>Page id [<?php _e( $instance['page_id'] ); ?>]</p>
+	<p>Link text: [<?php _e( $instance['manual_link_text'] ); ?>]</p>
+	<p>Link url: [<?php _e( $instance['manual_link_url'] ); ?>]</p>
 	<table width="100%" summary="Formatting">
 	<tr>
 
@@ -143,12 +145,20 @@ value="manual"
 	<tr>
 		<td></td>
 		<td><label for="<?php _e( $this->get_field_id( 'manual_link_text' ) ); ?>"><?php _e( 'Text to display' ); ?></label><br />
-			<input type="text" id="<?php _e( $this->get_field_id( 'manual_link_text' ) ); ?>" name="<?php _e( $this->get_field_name( 'manual_link_text' ) ); ?>" style="width:100%" /></td>
+			<input type="text"
+id="<?php _e( $this->get_field_id( 'manual_link_text' ) ); ?>"
+name="<?php _e( $this->get_field_name( 'manual_link_text' ) ); ?>"
+value="<?php _e( $instance["manual_link_text"] ); ?>"
+style="width:100%" /></td>
 	</tr>
 	<tr>
 		<td></td>
 		<td><label for="<?php _e( $this->get_field_id( 'manual_link_url' ) ); ?>"><?php _e( 'Web address' ); ?></label><br />
-			<input type="text" id="<?php _e( $this->get_field_id( 'manual_link_url' ) ); ?>" name="<?php _e( $this->get_field_name( 'manual_link_url' ) ); ?>" style="width:100%" /></td>
+			<input type="text"
+id="<?php _e( $this->get_field_id( 'manual_link_url' ) ); ?>"
+name="<?php _e( $this->get_field_name( 'manual_link_url' ) ); ?>"
+value="<?php _e( $instance["manual_link_url"] ); ?>"
+style="width:100%" /></td>
 	</tr>
 	</table>
 <?php
