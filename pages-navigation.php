@@ -97,12 +97,14 @@ wp_reset_postdata();
 	 */
 	function form($instance) {
 		$defaults = array (
+			'link_type' => "page",
 			'title' => __('Pages_Navigation_Widget', 'pages_navigation'),
 			'topics' => array (
 				"General",
 				"Featured",
-				"News"
-			)
+				"News")
+			'manual_link_text' => "Text to display",
+			'manual_link_url' => "http://www.example.com",
 		);
 		$instance = wp_parse_args((array) $instance, $defaults);
 		$pages = get_pages( array (
@@ -111,8 +113,9 @@ wp_reset_postdata();
 		) );
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Page:', 'hybrid'); ?></label>
-			<select id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>">
+			<input type="radio" name="<?php echo $this->get_field_name( 'link_type' ); ?>" value="page" />
+			<label for="<?php echo $this->get_field_id( 'page' ); ?>"><?php _e('Page:', 'hybrid'); ?></label><br />
+			<select id="<?php echo $this->get_field_id( 'page' ); ?>" name="<?php echo $this->get_field_name( 'page' ); ?>">
 				<option value=""><?php echo esc_attr( __( 'Select page' ) ); ?></option>
 <?php foreach( $pages as $page ) { ?>
 				<option value="<?php echo get_page_link( $page->ID ) ?>"><?php echo $page->post_title; ?></option>
@@ -120,8 +123,13 @@ wp_reset_postdata();
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'topics' ); ?>"><?php _e('Topics (one per line):', 'pages_navigation'); ?></label><br />
-			 <textarea id="<?php echo $this->get_field_id( 'topics' ); ?>" name="<?php echo $this->get_field_name( 'topics' ); ?>" rows="6" cols="15" style="width:100%"><?php echo implode("\n", $instance['topics'] ); ?></textarea>
+			<input type="radio" name="<?php echo $this->get_field_name( 'link_type' ); ?>" value="manual" />
+			<label for="<?php echo $this->get_field_id( 'link_type' ); ?>"><?php _e('Manual Link', 'pages_navigation'); ?></label><br />
+			<label for="<?php echo $this->get_field_id( 'manual_link_text' ); ?>"><?php _e('Text to display', 'pages_navigation'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id( 'manual_link_text' ); ?>" name="<?php echo $this->get_field_name( 'manual_link_text' ); ?>" style="width:100%" />
+			<br />
+			<label for="<?php echo $this->get_field_id( 'manual_link_url' ); ?>"><?php _e('Web address', 'pages_navigation'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id( 'manual_link_url' ); ?>" name="<?php echo $this->get_field_name( 'manual_link_url' ); ?>" style="width:100%" />
 		</p>
 		<?php
 	}
