@@ -109,6 +109,8 @@ wp_reset_postdata();
 			'post_status' => 'publish'
 		) );
 ?>
+	<p>Link type [<?php _e( $instance['link_type'] ); ?>]</p>
+	<p>Page id [<?php _e( $instance['page_id'] ); ?>]</p>
 	<table width="100%" summary="Formatting">
 	<tr>
 	<td><input type="radio" id="<?php _e( $this->get_field_id( 'page' ) ); ?>" name="<?php _e($this->get_field_name( 'link_type' ) ); ?>" value="page" checked="<?php _e( ('page' == $instance['link_type'])?'checked':'' ); ?>" /></td>
