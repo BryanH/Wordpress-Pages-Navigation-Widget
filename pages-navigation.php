@@ -108,9 +108,11 @@ wp_reset_postdata();
 		) );
 		$links = get_bookmarks();
 ?>
+<!--
 	<p>Link type [<?php _e( $instance['link_type'] ); ?>]</p>
 	<p>Page id [<?php _e( $instance['page_id'] ); ?>]</p>
 	<p>Link: [<?php _e( $instance['bookmark_id'] ); ?>]</p>
+-->
 	<table width="100%" summary="Formatting">
 	<tr>
 
@@ -141,6 +143,7 @@ value="manual"
 
 		<td><label for="<?php _e( $this->get_field_id( 'manual' ) ); ?>"><?php _e( 'Manual Link:' ); ?></label></td>
 	<tr>
+		<td></td>
 		<td><select id="<?php _e( $this->get_field_id( 'bookmark_id' ) ); ?>" name="<?php _e( $this->get_field_name( 'bookmark_id' ) ); ?>">
 			<option value=""><?php _e( esc_attr( __( 'Select link' ) ) ); ?></option>
 <?php foreach( $links as $link ) { ?>
