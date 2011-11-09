@@ -4,7 +4,7 @@ set :repository, "file://#{File.expand_path('.')}"
 set :domain, 'localhost'
 server "#{domain}", :app, :web, :db, :primary => true
 
-set :copy_exclude, [".rvmrc", ".gitignore", ".git", ".DS_Store"]
+set :copy_exclude, [".rvmrc", ".gitignore", ".git", ".DS_Store", "Capfile", "Gemfile", "Gemfile.lock"]
 set :branch, "master"
 set :git_shallow_clone, 1
 
@@ -60,9 +60,8 @@ namespace :deploy do
     run "cd #{deploy_to} && ln -nfs releases/#{File.basename current_release} current"
 
     run <<-CMD
-      cd #{deploy_to} &&
-      rm -f current/log current/public/system &&
-      ln -nfs ../../shared/log current/log
+      cd #{deploy_to}/current &&
+      rm -rf tmp log public config
     CMD
   end
 end
