@@ -106,28 +106,36 @@ wp_reset_postdata();
 			'parent' => 0, // top level only
 			'post_status' => 'publish'
 		) );
-		?>
-		<p>
-			<input type="radio" name="<?php _e($this->get_field_name( 'link_type' ) ); ?>" value="page" />
-			<label for="<?php _e( $this->get_field_id( 'page' ) ); ?>"><?php _e('Page:'); ?></label><br />
-			<select id="<?php _e( $this->get_field_id( 'page' ) ); ?>" name="<?php _e( $this->get_field_name( 'page' ) ); ?>">
-				<option value=""><?php _e( esc_attr( __( 'Select page' ) ) ); ?></option>
+?>
+	<table width="100%" summary="Formatting">
+	<tr>
+		<td><input type="radio" name="<?php _e($this->get_field_name( 'link_type' ) ); ?>" value="page" /></td>
+		<td><label for="<?php _e( $this->get_field_id( 'page' ) ); ?>"><?php _e('Page:'); ?></label></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><select id="<?php _e( $this->get_field_id( 'page' ) ); ?>" name="<?php _e( $this->get_field_name( 'page' ) ); ?>">
+			<option value=""><?php _e( esc_attr( __( 'Select page' ) ) ); ?></option>
 <?php foreach( $pages as $page ) { ?>
-				<option value="<?php _e(  get_page_link( $page->ID ) ); ?>"><?php _e( $page->post_title ); ?></option>
+			<option value="<?php _e(  get_page_link( $page->ID ) ); ?>"><?php _e( $page->post_title ); ?></option>
 <?php } ?>
-			</select>
-		</p>
-		<p>
-			<input type="radio" name="<?php _e( $this->get_field_name( 'link_type' ) ); ?>" value="manual" />
-			<label for="<?php _e( $this->get_field_id( 'link_type' ) ); ?>"><?php _e( 'Manual Link' ); ?></label><br />
-			<label for="<?php _e( $this->get_field_id( 'manual_link_text' ) ); ?>"><?php _e( 'Text to display' ); ?></label>
-			<input type="text" id="<?php _e( $this->get_field_id( 'manual_link_text' ) ); ?>" name="<?php _e( $this->get_field_name( 'manual_link_text' ) ); ?>" style="width:100%" />
-			<br />
-			<label for="<?php _e( $this->get_field_id( 'manual_link_url' ) ); ?>"><?php _e( 'Web address' ); ?></label>
-			<input type="text" id="<?php _e( $this->get_field_id( 'manual_link_url' ) ); ?>" name="<?php _e( $this->get_field_name( 'manual_link_url' ) ); ?>" style="width:100%" />
-		</p>
-		<?php
+		</select></td>
+	</tr>
+	<tr>
+		<td><input type="radio" name="<?php _e( $this->get_field_name( 'link_type' ) ); ?>" value="manual" /></td>
+		<td><label for="<?php _e( $this->get_field_id( 'link_type' ) ); ?>"><?php _e( 'Manual Link' ); ?></label></td>
+	<tr>
+		<td><label for="<?php _e( $this->get_field_id( 'manual_link_text' ) ); ?>"><?php _e( 'Text to display' ); ?></label><br />
+			<input type="text" id="<?php _e( $this->get_field_id( 'manual_link_text' ) ); ?>" name="<?php _e( $this->get_field_name( 'manual_link_text' ) ); ?>" style="width:100%" /></td>
+	</tr>
+	<tr>
+		<td><label for="<?php _e( $this->get_field_id( 'manual_link_url' ) ); ?>"><?php _e( 'Web address' ); ?></label><br />
+			<input type="text" id="<?php _e( $this->get_field_id( 'manual_link_url' ) ); ?>" name="<?php _e( $this->get_field_name( 'manual_link_url' ) ); ?>" style="width:100%" /></td>
+	</tr>
+	</table>
+<?php
 	}
+
 	/**
 	 * Register widget
 	 */
