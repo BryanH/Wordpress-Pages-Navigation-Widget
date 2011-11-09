@@ -98,7 +98,7 @@ wp_reset_postdata();
 	 */
 	function form($instance) {
 		$defaults = array (
-			'link_type' => "page",
+			'link_type' => 'page',
 			'page_id' => '',
 			'manual_link_text' => "Text to display",
 			'manual_link_url' => "http://www.example.com",
@@ -111,7 +111,7 @@ wp_reset_postdata();
 ?>
 	<table width="100%" summary="Formatting">
 	<tr>
-		<td><input type="radio" id="<?php _e( $this->get_field_id( 'page' ) ); ?>" name="<?php _e($this->get_field_name( 'link_type' ) ); ?>" value="page" /></td>
+	<td><input type="radio" id="<?php _e( $this->get_field_id( 'page' ) ); ?>" name="<?php _e($this->get_field_name( 'link_type' ) ); ?>" value="page" checked="<?php _e( ('page' == $instance['link_type'])?'checked':'' ); ?>" /></td>
 		<td><label for="<?php _e( $this->get_field_id( 'page' ) ); ?>"><?php _e('Page:'); ?></label></td>
 	</tr>
 	<tr>
@@ -124,7 +124,7 @@ wp_reset_postdata();
 		</select></td>
 	</tr>
 	<tr style="margin-top:5px">
-		<td><input type="radio" id="<?php _e( $this->get_field_id( 'manual' ) ); ?>" name="<?php _e( $this->get_field_name( 'link_type' ) ); ?>" value="manual" /></td>
+	<td><input type="radio" id="<?php _e( $this->get_field_id( 'manual' ) ); ?>" name="<?php _e( $this->get_field_name( 'link_type' ) ); ?>" value="manual" checked="<?php _e( ('manual' == $instance['link_type'])?'checked':'' ); ?>" /></td>
 		<td><label for="<?php _e( $this->get_field_id( 'manual' ) ); ?>"><?php _e( 'Manual Link:' ); ?></label></td>
 	<tr>
 		<td></td>
