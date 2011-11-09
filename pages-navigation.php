@@ -98,11 +98,6 @@ wp_reset_postdata();
 	function form($instance) {
 		$defaults = array (
 			'link_type' => "page",
-			'title' => __('Pages_Navigation_Widget', 'pages_navigation'),
-			'topics' => array (
-				"General",
-				"Featured",
-				"News")
 			'manual_link_text' => "Text to display",
 			'manual_link_url' => "http://www.example.com",
 		);
@@ -113,23 +108,23 @@ wp_reset_postdata();
 		) );
 		?>
 		<p>
-			<input type="radio" name="<?php echo $this->get_field_name( 'link_type' ); ?>" value="page" />
-			<label for="<?php echo $this->get_field_id( 'page' ); ?>"><?php _e('Page:', 'hybrid'); ?></label><br />
-			<select id="<?php echo $this->get_field_id( 'page' ); ?>" name="<?php echo $this->get_field_name( 'page' ); ?>">
-				<option value=""><?php echo esc_attr( __( 'Select page' ) ); ?></option>
+			<input type="radio" name="<?php _e($this->get_field_name( 'link_type' ) ); ?>" value="page" />
+			<label for="<?php _e( $this->get_field_id( 'page' ) ); ?>"><?php _e('Page:'); ?></label><br />
+			<select id="<?php _e( $this->get_field_id( 'page' ) ); ?>" name="<?php _e( $this->get_field_name( 'page' ) ); ?>">
+				<option value=""><?php _e( esc_attr( __( 'Select page' ) ) ); ?></option>
 <?php foreach( $pages as $page ) { ?>
-				<option value="<?php echo get_page_link( $page->ID ) ?>"><?php echo $page->post_title; ?></option>
+				<option value="<?php _e(  get_page_link( $page->ID ) ); ?>"><?php _e( $page->post_title ); ?></option>
 <?php } ?>
 			</select>
 		</p>
 		<p>
-			<input type="radio" name="<?php echo $this->get_field_name( 'link_type' ); ?>" value="manual" />
-			<label for="<?php echo $this->get_field_id( 'link_type' ); ?>"><?php _e('Manual Link', 'pages_navigation'); ?></label><br />
-			<label for="<?php echo $this->get_field_id( 'manual_link_text' ); ?>"><?php _e('Text to display', 'pages_navigation'); ?></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'manual_link_text' ); ?>" name="<?php echo $this->get_field_name( 'manual_link_text' ); ?>" style="width:100%" />
+			<input type="radio" name="<?php _e( $this->get_field_name( 'link_type' ); ?>" value="manual" />
+			<label for="<?php _e( $this->get_field_id( 'link_type' ) ); ?>"><?php _e( 'Manual Link' ); ?></label><br />
+			<label for="<?php _e( $this->get_field_id( 'manual_link_text' ) ); ?>"><?php _e( 'Text to display' ); ?></label>
+			<input type="text" id="<?php _e( $this->get_field_id( 'manual_link_text' ) ); ?>" name="<?php _e( $this->get_field_name( 'manual_link_text' ) ); ?>" style="width:100%" />
 			<br />
-			<label for="<?php echo $this->get_field_id( 'manual_link_url' ); ?>"><?php _e('Web address', 'pages_navigation'); ?></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'manual_link_url' ); ?>" name="<?php echo $this->get_field_name( 'manual_link_url' ); ?>" style="width:100%" />
+			<label for="<?php _e( $this->get_field_id( 'manual_link_url' ) ); ?>"><?php _e( 'Web address' ); ?></label>
+			<input type="text" id="<?php _e( $this->get_field_id( 'manual_link_url' ) ); ?>" name="<?php _e( $this->get_field_name( 'manual_link_url' ) ); ?>" style="width:100%" />
 		</p>
 		<?php
 	}
