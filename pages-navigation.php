@@ -87,9 +87,10 @@ wp_reset_postdata();
 	function update($new_instance, $old_instance) {
 		$instance = $old_instance;
 		/* Strip tags for title and name to remove HTML (important for text inputs). */
-		$instance['title'] = strip_tags(trim($new_instance['title']));
-		$topics = explode("\n", strip_tags(trim($new_instance['topics'])));
-		$instance['topics'] = $topics;
+		$instance['link_type'] = $new_instance['link_type'];
+		$instance['page_id'] = $new_instance['page_id'];
+		$instance['manual_link_text'] = strip_tags(trim($new_instance['manual_link_text']));
+		$instance['manual_link_url'] = strip_tags(trim($new_instance['manual_link_url']));
 		return $instance;
 	}
 	/**
@@ -98,6 +99,7 @@ wp_reset_postdata();
 	function form($instance) {
 		$defaults = array (
 			'link_type' => "page",
+			'page_id' => '',
 			'manual_link_text' => "Text to display",
 			'manual_link_url' => "http://www.example.com",
 		);
@@ -114,7 +116,7 @@ wp_reset_postdata();
 	</tr>
 	<tr>
 		<td></td>
-		<td><select id="<?php _e( $this->get_field_id( 'page' ) ); ?>" name="<?php _e( $this->get_field_name( 'page' ) ); ?>">
+		<td><select id="<?php _e( $this->get_field_id( 'page_id' ) ); ?>" name="<?php _e( $this->get_field_name( 'page_id' ) ); ?>">
 			<option value=""><?php _e( esc_attr( __( 'Select page' ) ) ); ?></option>
 <?php foreach( $pages as $page ) { ?>
 			<option value="<?php _e(  get_page_link( $page->ID ) ); ?>"><?php _e( $page->post_title ); ?></option>
