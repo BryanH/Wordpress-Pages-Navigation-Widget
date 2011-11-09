@@ -127,7 +127,7 @@ value="page"
 		<td><select id="<?php _e( $this->get_field_id( 'page_id' ) ); ?>" name="<?php _e( $this->get_field_name( 'page_id' ) ); ?>">
 			<option value=""><?php _e( esc_attr( __( 'Select page' ) ) ); ?></option>
 <?php foreach( $pages as $page ) { ?>
-			<option value="<?php _e(  get_page_link( $page->ID ) ); ?>"><?php _e( $page->post_title ); ?></option>
+			<option value="<?php _e( $page->ID ); ?>" <?php ($page->ID == $instance['page_id'])?'selected="selected"':'' ?>><?php _e( $page->post_title ); ?></option>
 <?php } ?>
 		</select></td>
 	</tr>
