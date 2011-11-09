@@ -89,8 +89,7 @@ wp_reset_postdata();
 		/* Strip tags for title and name to remove HTML (important for text inputs). */
 		$instance['link_type'] = $new_instance['link_type'];
 		$instance['page_id'] = $new_instance['page_id'];
-		$instance['manual_link_text'] = strip_tags(trim($new_instance['manual_link_text']));
-		$instance['manual_link_url'] = strip_tags(trim($new_instance['manual_link_url']));
+		$instance['bookmark_id'] = $new_instance['bookmark_id'];
 		return $instance;
 	}
 	/**
@@ -100,19 +99,18 @@ wp_reset_postdata();
 		$defaults = array (
 			'link_type' => 'page',
 			'page_id' => '',
-			'manual_link_text' => "Text to display",
-			'manual_link_url' => "http://www.example.com",
+			'bookmark_id' => ''
 		);
 		$instance = wp_parse_args((array) $instance, $defaults);
 		$pages = get_pages( array (
 			'parent' => 0, // top level only
 			'post_status' => 'publish'
 		) );
+		$links = get_bookmarks();
 ?>
 	<p>Link type [<?php _e( $instance['link_type'] ); ?>]</p>
 	<p>Page id [<?php _e( $instance['page_id'] ); ?>]</p>
-	<p>Link text: [<?php _e( $instance['manual_link_text'] ); ?>]</p>
-	<p>Link url: [<?php _e( $instance['manual_link_url'] ); ?>]</p>
+	<p>Link: [<?php _e( $instance['bookmark_id'] ); ?>]</p>
 	<table width="100%" summary="Formatting">
 	<tr>
 
@@ -133,7 +131,7 @@ value="page"
 <?php } ?>
 		</select></td>
 	</tr>
-	<tr style="margin-top:5px">
+	<tr>
 
 	<td><input type="radio"
 id="<?php _e( $this->get_field_id( 'manual' ) ); ?>"
@@ -143,22 +141,12 @@ value="manual"
 
 		<td><label for="<?php _e( $this->get_field_id( 'manual' ) ); ?>"><?php _e( 'Manual Link:' ); ?></label></td>
 	<tr>
-		<td></td>
-		<td><label for="<?php _e( $this->get_field_id( 'manual_link_text' ) ); ?>"><?php _e( 'Text to display' ); ?></label><br />
-			<input type="text"
-id="<?php _e( $this->get_field_id( 'manual_link_text' ) ); ?>"
-name="<?php _e( $this->get_field_name( 'manual_link_text' ) ); ?>"
-value="<?php _e( $instance["manual_link_text"] ); ?>"
-style="width:100%" /></td>
-	</tr>
-	<tr>
-		<td></td>
-		<td><label for="<?php _e( $this->get_field_id( 'manual_link_url' ) ); ?>"><?php _e( 'Web address' ); ?></label><br />
-			<input type="text"
-id="<?php _e( $this->get_field_id( 'manual_link_url' ) ); ?>"
-name="<?php _e( $this->get_field_name( 'manual_link_url' ) ); ?>"
-value="<?php _e( $instance["manual_link_url"] ); ?>"
-style="width:100%" /></td>
+		<td><select id="<?php _e( $this->get_field_id( 'bookmark_id' ) ); ?>" name="<?php _e( $this->get_field_name( 'bookmark_id' ) ); ?>">
+			<option value=""><?php _e( esc_attr( __( 'Select link' ) ) ); ?></option>
+<?php foreach( $links as $link ) { ?>
+			<option value="<?php _e( $link->ID ); ?>" <?php _e( ($link->ID == $instance['bookmark_id'])?'selected="selected"':'' ); ?>><?php _e( $page->post_title ); ?></option>
+<?php } ?>
+		</select></td>
 	</tr>
 	</table>
 <?php
