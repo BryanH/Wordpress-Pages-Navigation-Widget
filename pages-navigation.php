@@ -125,10 +125,12 @@ wp_reset_postdata();
 		<td><input type="radio" name="<?php _e( $this->get_field_name( 'link_type' ) ); ?>" value="manual" /></td>
 		<td><label for="<?php _e( $this->get_field_id( 'link_type' ) ); ?>"><?php _e( 'Manual Link' ); ?></label></td>
 	<tr>
+		<td></td>
 		<td><label for="<?php _e( $this->get_field_id( 'manual_link_text' ) ); ?>"><?php _e( 'Text to display' ); ?></label><br />
 			<input type="text" id="<?php _e( $this->get_field_id( 'manual_link_text' ) ); ?>" name="<?php _e( $this->get_field_name( 'manual_link_text' ) ); ?>" style="width:100%" /></td>
 	</tr>
 	<tr>
+		<td></td>
 		<td><label for="<?php _e( $this->get_field_id( 'manual_link_url' ) ); ?>"><?php _e( 'Web address' ); ?></label><br />
 			<input type="text" id="<?php _e( $this->get_field_id( 'manual_link_url' ) ); ?>" name="<?php _e( $this->get_field_name( 'manual_link_url' ) ); ?>" style="width:100%" /></td>
 	</tr>
