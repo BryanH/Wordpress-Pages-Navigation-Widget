@@ -25,7 +25,7 @@ class Widget_Pages_Navigation extends WP_Widget {
 			'height' => 150,
 			'id_base' => 'pages_navigation'
 		);
-		$this->WP_Widget('pages_navigation', __('Hot Topics', 'pages_navigation'), $widget_ops, $control_ops);
+		$this->WP_Widget('pages_navigation', __('Page Navigation', 'pages_navigation'), $widget_ops, $control_ops);
 	}
 	/**
 	 * Public View
@@ -44,6 +44,25 @@ class Widget_Pages_Navigation extends WP_Widget {
 		/* Display array separated by delimiter
 		 * TODO: make delimiter a configurable option?
 		 * */
+
+
+/**********
+	$query = new WP_Query( 'post_parent=93' ); // Get sub posts
+$the_query = new WP_Query( $args );
+
+// The Loop
+while ( $the_query->have_posts() ) : $the_query->the_post();
+	echo '<li>';
+	echo the_title();
+	echo '</li>';
+endwhile;
+
+// Reset Post Data
+wp_reset_postdata();
+
+	*******/
+
+
 		if ($topics && isset ($topics)) {
 			foreach ($topics as & $topic) {
 				$category_id = get_cat_ID($topic);
@@ -86,10 +105,19 @@ class Widget_Pages_Navigation extends WP_Widget {
 			)
 		);
 		$instance = wp_parse_args((array) $instance, $defaults);
+		$pages = get_pages( array (
+			'parent' => 0, // top level only
+			'post_status' => 'publish'
+		) );
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Caption:', 'hybrid'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Page:', 'hybrid'); ?></label>
+			<select id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>">
+				<option value=""><?php echo esc_attr( __( 'Select page' ) ); ?></option>
+<?php foreach( $pages as $page ) { ?>
+				<option value="<?php echo get_page_link( $page->ID ) ?>"><?php echo $page->post_title; ?></option>
+<?php } ?>
+			</select>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'topics' ); ?>"><?php _e('Topics (one per line):', 'pages_navigation'); ?></label><br />
