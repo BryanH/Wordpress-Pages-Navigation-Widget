@@ -78,7 +78,7 @@ class Widget_Pages_Navigation extends WP_Widget {
 	 */
 	function form($instance) {
 		$defaults = array (
-			'title' => __('Pages_Navigation', 'pages_navigation'),
+			'title' => __('Pages_Navigation_Widget', 'pages_navigation'),
 			'topics' => array (
 				"General",
 				"Featured",

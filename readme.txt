@@ -1,4 +1,4 @@
-=== Pages Navigation ===
+=== Pages Navigation Widget ===
 Contributors: bryanhanks
 Tags: pages, navigation, automatic
 Requires at least: 3.2.1
