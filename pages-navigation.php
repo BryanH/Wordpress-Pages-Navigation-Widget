@@ -113,7 +113,13 @@ wp_reset_postdata();
 	<p>Page id [<?php _e( $instance['page_id'] ); ?>]</p>
 	<table width="100%" summary="Formatting">
 	<tr>
-	<td><input type="radio" id="<?php _e( $this->get_field_id( 'page' ) ); ?>" name="<?php _e($this->get_field_name( 'link_type' ) ); ?>" value="page" checked="<?php _e( ('page' == $instance['link_type'])?'checked':'' ); ?>" /></td>
+
+	<td><input type="radio"
+id="<?php _e( $this->get_field_id( 'page' ) ); ?>"
+name="<?php _e($this->get_field_name( 'link_type' ) ); ?>"
+value="page"
+<?php _e( ('page' == $instance['link_type'])?'checked="checked"':'' ); ?>" /></td>
+
 		<td><label for="<?php _e( $this->get_field_id( 'page' ) ); ?>"><?php _e('Page:'); ?></label></td>
 	</tr>
 	<tr>
@@ -126,7 +132,13 @@ wp_reset_postdata();
 		</select></td>
 	</tr>
 	<tr style="margin-top:5px">
-	<td><input type="radio" id="<?php _e( $this->get_field_id( 'manual' ) ); ?>" name="<?php _e( $this->get_field_name( 'link_type' ) ); ?>" value="manual" checked="<?php _e( ('manual' == $instance['link_type'])?'checked':'' ); ?>" /></td>
+
+	<td><input type="radio"
+id="<?php _e( $this->get_field_id( 'manual' ) ); ?>"
+name="<?php _e( $this->get_field_name( 'link_type' ) ); ?>"
+value="manual"
+<?php _e( ('manual' == $instance['link_type'])?'checked="checked"':'' ); ?>" /></td>
+
 		<td><label for="<?php _e( $this->get_field_id( 'manual' ) ); ?>"><?php _e( 'Manual Link:' ); ?></label></td>
 	<tr>
 		<td></td>
