@@ -1,22 +1,68 @@
-set :application, "set your application name here"
-set :repository,  "set your repository location here"
+set :application, "page_navigation"
+set :repository, "file://#{File.expand_path('.')}"
 
-set :scm, :subversion
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
+set :domain, 'localhost'
+server "#{domain}", :app, :web, :db, :primary => true
 
-role :web, "your web-server here"                          # Your HTTP server, Apache/etc
-role :app, "your app-server here"                          # This may be the same as your `Web` server
-role :db,  "your primary db-server here", :primary => true # This is where Rails migrations will run
-role :db,  "your slave db-server here"
+set :copy_exclude, [".rvmrc", ".gitignore", ".git", ".DS_Store"]
+set :branch, "master"
+set :git_shallow_clone, 1
 
-# if you're still using the script/reaper helper you will need
-# these http://github.com/rails/irs_process_scripts
+set :scm, :git
+set :spinner, false
+set :use_sudo, false
+set :deploy_via, :copy
+set :copy_strategy, :export
+set :deploy_to, "/opt/local/apache2/htdocs/wordpress/wp-content/plugins/cap/#{application}"
 
-# If you are using Passenger mod_rails uncomment this:
-# namespace :deploy do
-#   task :start do ; end
-#   task :stop do ; end
-#   task :restart, :roles => :app, :except => { :no_release => true } do
-#     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-#   end
-# end
+#ssh_options[:verbose] = :debug
+#set :user, "www"
+
+after "deploy", "deploy:cleanup"
+
+namespace :deploy do
+
+  desc "Show environment"
+  task :debug_env do
+    run "env"
+  end
+  #
+  # Neutralize cap tasks that make no sense
+  # See:
+  #  http://wiki.capify.org/article/Neutralise_Capistrano_Default_Methods
+  #
+  [:restart, :start, :stop].each do |default_task|
+    task default_task do
+      # Do nothing
+      puts "Blanked the '#{default_task.to_s}' task"
+    end
+  end
+
+  #
+  # Stolen from MMX
+  #
+  desc "Deploy all files to app server"
+  task :deploy, :except => { :no_release => true } do
+    update_code
+    symlink
+    cleanup
+  end
+
+  # stolen from http://www.paperplanes.de/archives/2007/5/26/deploying_in_a_chroot_environment/
+  # I, for one, welcome MMX as the new Cap Overlord
+  #
+  desc "Overwriting symlink task to replace absolute links with relative ones"
+  task :symlink, :except => { :no_release => true } do
+    on_rollback {
+      run "cd #{deploy_to} && ln -nfs releases/#{File.basename previous_release} current"
+    }
+
+    run "cd #{deploy_to} && ln -nfs releases/#{File.basename current_release} current"
+
+    run <<-CMD
+      cd #{deploy_to} &&
+      rm -f current/log current/public/system &&
+      ln -nfs ../../shared/log current/log
+    CMD
+  end
+end
