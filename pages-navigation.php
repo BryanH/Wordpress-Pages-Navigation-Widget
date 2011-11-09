@@ -118,7 +118,7 @@ wp_reset_postdata();
 			</select>
 		</p>
 		<p>
-			<input type="radio" name="<?php _e( $this->get_field_name( 'link_type' ); ?>" value="manual" />
+			<input type="radio" name="<?php _e( $this->get_field_name( 'link_type' ) ); ?>" value="manual" />
 			<label for="<?php _e( $this->get_field_id( 'link_type' ) ); ?>"><?php _e( 'Manual Link' ); ?></label><br />
 			<label for="<?php _e( $this->get_field_id( 'manual_link_text' ) ); ?>"><?php _e( 'Text to display' ); ?></label>
 			<input type="text" id="<?php _e( $this->get_field_id( 'manual_link_text' ) ); ?>" name="<?php _e( $this->get_field_name( 'manual_link_text' ) ); ?>" style="width:100%" />
