@@ -85,10 +85,17 @@ class Widget_Pages_Navigation extends WP_Widget {
 	 */
 	function update($new_instance, $old_instance) {
 		$instance = $old_instance;
-		$instance['title'] = strip_tags( $new_instance['title'] );
 		$instance['link_type'] = $new_instance['link_type'];
 		$instance['page_id'] = $new_instance['page_id'];
 		$instance['bookmark_id'] = $new_instance['bookmark_id'];
+		$new_title = '';
+		if( 'page' == $instance['link_type'] ) {
+			$new_title = get_page( $instance['page_id'] )->post_title;
+		} else {
+			$new_title = get_bookmark_field( 'link_name', $instance['bookmark_id'] );
+		}
+
+		$instance['title'] = strip_tags( $new_title );
 		return $instance;
 	}
 	/**
