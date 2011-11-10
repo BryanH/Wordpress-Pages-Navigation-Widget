@@ -85,7 +85,7 @@ class Widget_Pages_Navigation extends WP_Widget {
 	 */
 	function update($new_instance, $old_instance) {
 		$instance = $old_instance;
-		$instance['title'] = "Foo man!";
+		$instance['title'] = $new_instance['title'];
 		$instance['link_type'] = $new_instance['link_type'];
 		$instance['page_id'] = $new_instance['page_id'];
 		$instance['bookmark_id'] = $new_instance['bookmark_id'];
@@ -98,7 +98,8 @@ class Widget_Pages_Navigation extends WP_Widget {
 		$defaults = array (
 			'link_type' => 'page',
 			'page_id' => '-999',
-			'bookmark_id' => '-999'
+			'bookmark_id' => '-999',
+			'title'=>'something like that',
 		);
 		$instance = wp_parse_args((array) $instance, $defaults);
 		$pages = get_pages( array (
@@ -148,7 +149,7 @@ _e( $link->link_name ); ?></option>
 		</select></td>
 	</tr>
 	</table>
-	<input type="hidden" name="<?php _e( $this->get_field_name( 'title' ) ); ?>" value="foo daddy" />:
+	<input type="hidden" name="<?php _e( $this->get_field_name( 'title' ) ); ?>" value="foo daddy" />
 <?php
 	}
 
