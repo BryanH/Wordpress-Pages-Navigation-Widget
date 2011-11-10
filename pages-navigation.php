@@ -8,8 +8,7 @@ Author: HBJitney, LLC
 Author URI: http://hbjitney.com
 License:
 
-Instructions: copy the entire directory into wp-content/plugins
-
+Instructions: copy the entire directory into wp-content/plugins, then activate the plugin to make the widget available. See the readme.txt file for more information.
 */
 
 class Widget_Pages_Navigation extends WP_Widget {

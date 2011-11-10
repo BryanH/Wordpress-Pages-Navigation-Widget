@@ -9,35 +9,16 @@ Enables you to create navigation to your pages, with automatic drop-downs to sub
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+This plugin creates a widget that allows you to specify a page or link as a navigation item. Child pages are loaded as a drop-down menu below the parent.
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+It is possible to mix-and-match any number of pages and/links in your navigation bar. Simply drop new widgets for each item.
 
-A few notes about the sections above:
-
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
-
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
-
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+If you wish to reorder the navigation, simply drag-drop the widgets. Child pages are ordered using the value in the child page's menu order field.
 
 == Installation ==
 * Copy the directory into your `wp-content/plugin` directory.
 * Go into your Wordpress admin screen and activate the plugin.
-* Go to your widgets screen and drag the widget to the sidebar.
+* Go to your widgets screen and drag the widget to the appropriate sidebar.
 
 == Frequently Asked Questions ==
 
@@ -47,13 +28,43 @@ The plugin creates a widget. Go to the widget menu and you'll see it.
 
 = The widget isn't showing up in the right place on my template. =
 
-Your template needs to define the navigation location as a widget area. Contact your template designer or modify the template yourself.
+Your template needs to define the navigation location as a widget area.
+Contact your template designer or modify the template yourself.
+
+= What sidebar settings should I use? =
+
+You will want to wrap the output in a list item.
+
+In `function.php`, do something like this:
+`  register_sidebar( array(
+          'name' => 'Navigation Sidebar',
+          'before_title' => '',
+          'after_title' => '',
+          'before_widget' => '<li>',
+          'after_widget' => '</li>',
+  ));
+`
+
+In your template's file (`header.php`?) place the sidebar code where you want the menu to appear, something like this:
+`
+<div id="navbar">
+  <div id="navbarleft">
+    <ul id="nav">
+      <li><a href="/">Home</a></li>
+<?php
+if (
+ !function_exists('dynamic_sidebar') ||
+ !dynamic_sidebar("Navigation Sidebar")
+) {}
+?>
+
+...`
+
+*Note:* A page's children will be wrapped in an unordered list (this cannot be changed for now).
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the directory of the stable readme.txt, so in this case, `/tags/4.3/screenshot-1.png` (or jpg, jpeg, gif)
-2. This is the second screen shot
+1. Widget configuration page
 
 == Changelog ==
 
