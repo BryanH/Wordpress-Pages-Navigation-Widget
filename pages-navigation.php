@@ -55,7 +55,7 @@ class Widget_Pages_Navigation extends WP_Widget {
 		} else {
 			// Link
 			echo
-			$link_text = get_bookmark_field( 'link_name', $instance['bookmark_id' );
+			$link_text = get_bookmark_field( 'link_name', $instance['bookmark_id'] );
 			$link_url = get_bookmark_field( 'link_url', $instance['bookmark_id'] );
 		}
 
