@@ -71,9 +71,7 @@ class Widget_Pages_Navigation extends WP_Widget {
 
 			//	get_page( $instance['page_id'] ) );
 			foreach( $children as $child ) {
-				_e( "<li>" );
-				_e( '<a href="' . get_page_link( $child->ID ) . '">' . $child->post_title . '</a>' );
-				_e( "</li>" );
+				_e( '<li><a href="' . get_page_link( $child->ID ) . '">' . $child->post_title . '</a></li>' );
 			}
 			_e( "<!-- / children -->" );
 		}
