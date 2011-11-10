@@ -44,8 +44,6 @@ class Widget_Pages_Navigation extends WP_Widget {
 		 */
 		$link_text = 'Error';
 		$link_url = '/';
-		echo "<!-- type: " . $instance['link_type'] . " -->";
-		echo "<li>";
 
 		if( 'page' == $instance['link_type'] ) {
 			// Page
@@ -54,16 +52,15 @@ class Widget_Pages_Navigation extends WP_Widget {
 			$link_url = get_page_link( $instance['page_id'] );
 		} else {
 			// Link
-			echo
+			echo "Bookmark id: " . $instance['bookmark_id'];
 			$link_text = get_bookmark_field( 'link_name', $instance['bookmark_id'] );
 			$link_url = get_bookmark_field( 'link_url', $instance['bookmark_id'] );
 		}
 
-echo "<!-- Link -->";
+echo "<!-- Link for [" . $instance['link_type'] . "] -->";
 		echo '<a href="' . $link_url . '">' . $link_text . '</a>';
 echo "<!-- /Link -->";
 		// TODO: children here
-		echo '</li>';
 /**********
 	$query = new WP_Query( 'post_parent=93' ); // Get sub posts
 $the_query = new WP_Query( $args );
