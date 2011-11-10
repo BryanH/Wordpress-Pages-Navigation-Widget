@@ -3,7 +3,7 @@
 Plugin Name: Pages Navigation Widget
 Plugin URI: http://github.com/BryanH/Pages-Navigation
 Description: Creates drop-down navigation of select pages
-Version: 0.5
+Version: 1.0
 Author: HBJitney, LLC
 Author URI: http://hbjitney.com
 License:
