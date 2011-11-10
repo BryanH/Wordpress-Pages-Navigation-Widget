@@ -35,7 +35,7 @@ class Widget_Pages_Navigation extends WP_Widget {
 		/* Our variables from the widget settings. */
 		//$title = apply_filters('widget_title', $instance['title']);
 		/* REQUIRED */
-		echo $before_widget;
+		_e( $before_widget );
 		/* 'before' and 'after' are REQUIRED */
 		/*
 		 if ($title) {
@@ -47,34 +47,27 @@ class Widget_Pages_Navigation extends WP_Widget {
 
 		if( 'page' == $instance['link_type'] ) {
 			// Page
-			$link_text = get_page( $instance['page_id'] )->post_title;
-			//$link_text = trim( strip_tags( $instance['page_id']->post_title ) );
+			$link_text = trim( strip_tags( get_page( $instance['page_id'] )->post_title ) );
 			$link_url = get_page_link( $instance['page_id'] );
 		} else {
 			// Link
-			$link_text = get_bookmark_field( 'link_name', $instance['bookmark_id'] );
+			$link_text = trim( strip_tags( get_bookmark_field( 'link_name', $instance['bookmark_id'] ) ) );
 			$link_url = get_bookmark_field( 'link_url', $instance['bookmark_id'] );
 		}
 
-echo "<!-- Link for [" . $instance['link_type'] . "] -->";
-		echo '<a href="' . $link_url . '">' . $link_text . '</a>';
-echo "<!-- /Link -->";
-		// TODO: children here
-/**********
-	$query = new WP_Query( 'post_parent=93' ); // Get sub posts
-$the_query = new WP_Query( $args );
+		_e( "<!-- Link for [" . $instance['link_type'] . "] -->" );
+		_e( '<a href="' . $link_url . '">' . $link_text . '</a>' );
+		_e( "<!-- /Link -->" );
 
-// The Loop
-while ( $the_query->have_posts() ) : $the_query->the_post();
-	echo '<li>';
-	echo the_title();
-	echo '</li>';
-endwhile;
-
-// Reset Post Data
-wp_reset_postdata();
-
-	*******/
+		// Process children
+		if( 'page' == $instance['link_type'] ) {
+			$children = get_page_children( get_page( $instance['page_id'] ) );
+			foreach( $children as $child ) {
+				_e( "<li>" );
+				_e( '<a href="' . get_page_link( $child->ID ) . '">' . $child->post_title . '</a>' );
+				_e( "</li>" );
+			}
+		}
 
 		/* REQUIRED */
 		echo $after_widget;
@@ -106,11 +99,6 @@ wp_reset_postdata();
 		) );
 		$links = get_bookmarks();
 ?>
-<!--
-	<p>Link type [<?php _e( $instance['link_type'] ); ?>]</p>
-	<p>Page id [<?php _e( $instance['page_id'] ); ?>]</p>
-	<p>Link: [<?php _e( $instance['bookmark_id'] ); ?>]</p>
--->
 	<table width="100%" summary="Formatting">
 	<tr>
 
