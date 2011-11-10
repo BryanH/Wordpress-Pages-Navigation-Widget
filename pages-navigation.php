@@ -99,7 +99,7 @@ class Widget_Pages_Navigation extends WP_Widget {
 			'link_type' => 'page',
 			'page_id' => '-999',
 			'bookmark_id' => '-999',
-			'title'=>'something like that',
+			'title'=> __('something like that', 'page_navigation'),
 		);
 		$instance = wp_parse_args((array) $instance, $defaults);
 		$pages = get_pages( array (
@@ -149,7 +149,7 @@ _e( $link->link_name ); ?></option>
 		</select></td>
 	</tr>
 	</table>
-	<input type="hidden" name="<?php _e( $this->get_field_name( 'title' ) ); ?>" value="foo daddy" />
+	<input type="hidden" name="<?php _e( $this->get_field_name( 'title' ) ); ?>" value="<?php _e( $instance['title'] ); ?>" />
 <?php
 	}
 
