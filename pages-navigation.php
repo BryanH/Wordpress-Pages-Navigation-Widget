@@ -52,7 +52,7 @@ class Widget_Pages_Navigation extends WP_Widget {
 			$link_url = get_page_link( $instance['page_id'] );
 		} else {
 			// Link
-			echo "Bookmark id: " . $instance['bookmark_id'];
+			echo "Bookmark id: [" . $instance['bookmark_id'] . "]";
 			$link_text = get_bookmark_field( 'link_name', $instance['bookmark_id'] );
 			$link_url = get_bookmark_field( 'link_url', $instance['bookmark_id'] );
 		}
@@ -97,8 +97,8 @@ wp_reset_postdata();
 	function form($instance) {
 		$defaults = array (
 			'link_type' => 'page',
-			'page_id' => '',
-			'bookmark_id' => ''
+			'page_id' => '-999',
+			'bookmark_id' => '-999'
 		);
 		$instance = wp_parse_args((array) $instance, $defaults);
 		$pages = get_pages( array (
@@ -147,7 +147,7 @@ value="manual"
 		<td><select id="<?php _e( $this->get_field_id( 'bookmark_id' ) ); ?>" name="<?php _e( $this->get_field_name( 'bookmark_id' ) ); ?>">
 			<option value=""><?php _e( esc_attr( __( 'Select link' ) ) ); ?></option>
 <?php foreach( $links as $link ) { ?>
-			<option value="<?php _e( $link->ID ); ?>" <?php _e( ($link->ID == $instance['bookmark_id'])?'selected="selected"':'' ); ?>><?php
+			<option value="<?php _e( $link->link_id ); ?>" <?php _e( ($link->link_id == $instance['bookmark_id'])?'selected="selected"':'' ); ?>><?php
 _e( $link->link_name ); ?></option>
 <?php } ?>
 		</select></td>
