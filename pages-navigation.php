@@ -85,7 +85,7 @@ class Widget_Pages_Navigation extends WP_Widget {
 	 */
 	function update($new_instance, $old_instance) {
 		$instance = $old_instance;
-		/* Strip tags for title and name to remove HTML (important for text inputs). */
+		$instance['title'] = "Foo man!";
 		$instance['link_type'] = $new_instance['link_type'];
 		$instance['page_id'] = $new_instance['page_id'];
 		$instance['bookmark_id'] = $new_instance['bookmark_id'];
