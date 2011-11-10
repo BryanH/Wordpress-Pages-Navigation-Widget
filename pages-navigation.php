@@ -42,8 +42,8 @@ class Widget_Pages_Navigation extends WP_Widget {
 		}
 		$link_text = 'Error';
 		$link_url = '/';
-		echo '<!-- type: ' . $instance['link_type'] . ' -->';
-		echo '<li>';
+		echo "<!-- type: " . $instance['link_type'] . " -->";
+		echo "<li>";
 
 		if( 'page' == $instance['link_type'] ) {
 			// Page
@@ -55,8 +55,9 @@ class Widget_Pages_Navigation extends WP_Widget {
 			$link_url = get_bookmark_field( 'link_url', $instance['bookmark_id'] );
 		}
 
+echo "<!-- Link -->";
 		echo '<a href=' . $link_url . '>' . $link_text . '</a>';
-
+echo "<!-- /Link -->";
 		// TODO: children here
 		echo '</li>';
 /**********
