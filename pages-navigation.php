@@ -148,6 +148,7 @@ _e( $link->link_name ); ?></option>
 		</select></td>
 	</tr>
 	</table>
+	<input type="hidden" name="<?php _e( $this->get_field_name( 'title' ) ); ?>" value="foo daddy" />:
 <?php
 	}
 
