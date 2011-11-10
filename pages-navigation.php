@@ -31,15 +31,9 @@ class Widget_Pages_Navigation extends WP_Widget {
 	 */
 	function widget($args, $instance) {
 		extract($args);
-		/* Our variables from the widget settings. */
-		$title = apply_filters('widget_title', $instance['title']);
 		/* REQUIRED */
 		_e( $before_widget );
 		/* 'before' and 'after' are REQUIRED */
-
-		 if ($title) {
-			echo $before_title . $title . $after_title . '&nbsp;';
-		 }
 
 		$link_text = 'Error';
 		$link_url = '/';
