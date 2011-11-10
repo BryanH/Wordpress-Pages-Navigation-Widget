@@ -37,9 +37,11 @@ class Widget_Pages_Navigation extends WP_Widget {
 		/* REQUIRED */
 		echo $before_widget;
 		/* 'before' and 'after' are REQUIRED */
-		if ($title) {
+		/*
+		 if ($title) {
 			echo $before_title . $title . $after_title . '&nbsp;';
-		}
+		 }
+		 */
 		$link_text = 'Error';
 		$link_url = '/';
 		echo "<!-- type: " . $instance['link_type'] . " -->";
@@ -47,11 +49,12 @@ class Widget_Pages_Navigation extends WP_Widget {
 
 		if( 'page' == $instance['link_type'] ) {
 			// Page
-			$link_text = trim( strip_tags( $instance['page_id']->post_title ) );
+			$link_text = $instance['page_id']->post_title;
+			//$link_text = trim( strip_tags( $instance['page_id']->post_title ) );
 			$link_url = get_page_link( $instance['page_id'] );
 		} else {
 			// Link
-			$link_text = trim( strip_tags( $instance['bookmark_id']->link_name ) );
+			$link_text = $instance['bookmark_id']->link_name;
 			$link_url = get_bookmark_field( 'link_url', $instance['bookmark_id'] );
 		}
 
@@ -76,22 +79,6 @@ wp_reset_postdata();
 
 	*******/
 
-
-		if ($topics && isset ($topics)) {
-			foreach ($topics as & $topic) {
-				$category_id = get_cat_ID($topic);
-				if (0 < $category_id) {
-					// modified the category link for the niche sites "site category" functionality
-					// @TODO: this should change in the future as we fix the niche site theme
-					$category = get_category($category_id);
-					$category_link = get_bloginfo('url') . '/category/' . $category->slug ;
-					$topic = '<a href="' . $category_link . '" title="' . $topic . '">' . $topic . '</a>';
-				} else {
-					//	topic is not a link
-				}
-			}
-			echo implode(' | ', $topics);
-		}
 		/* REQUIRED */
 		echo $after_widget;
 	}
