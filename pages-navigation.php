@@ -63,6 +63,7 @@ class Widget_Pages_Navigation extends WP_Widget {
 		if( 'page' == $instance['link_type'] ) {
 			$p_id = $instance['page_id']; // Parent's page ID
 			_e( "<!-- Getting children -->" );
+			_e( "<ul>" );
 			$children = get_pages( array(
 				'child_of' => $p_id,
 				'parent' => $p_id,
@@ -73,6 +74,7 @@ class Widget_Pages_Navigation extends WP_Widget {
 			foreach( $children as $child ) {
 				_e( '<li><a href="' . get_page_link( $child->ID ) . '">' . $child->post_title . '</a></li>' );
 			}
+			_e( "</ul>" );
 			_e( "<!-- / children -->" );
 		}
 
