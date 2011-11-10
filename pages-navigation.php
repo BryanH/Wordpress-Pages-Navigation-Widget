@@ -33,19 +33,32 @@ class Widget_Pages_Navigation extends WP_Widget {
 	function widget($args, $instance) {
 		extract($args);
 		/* Our variables from the widget settings. */
-		$title = apply_filters('widget_title', $instance['title']);
-		$topics = $instance['topics'];
+		//$title = apply_filters('widget_title', $instance['title']);
 		/* REQUIRED */
 		echo $before_widget;
 		/* 'before' and 'after' are REQUIRED */
 		if ($title) {
 			echo $before_title . $title . $after_title . '&nbsp;';
 		}
-		/* Display array separated by delimiter
-		 * TODO: make delimiter a configurable option?
-		 * */
+		$link_text = 'Error';
+		$link_url = '/';
+		echo '<!-- type: ' . $instance['link_type'] . ' -->';
+		echo '<li>';
 
+		if( 'page' == $instance['link_type'] ) {
+			// Page
+			$link_text = trim( strip_tags( $instance['page_id']->post_title ) );
+			$link_url = get_page_link( $instance['page_id'] );
+		} else {
+			// Link
+			$link_text = trim( strip_tags( $instance['bookmark_id']->link_name ) );
+			$link_url = get_bookmark_field( 'link_url', $instance['bookmark_id'] );
+		}
 
+		echo '<a href=' . $link_url . '>' . $link_text . '</a>';
+
+		// TODO: children here
+		echo '</li>';
 /**********
 	$query = new WP_Query( 'post_parent=93' ); // Get sub posts
 $the_query = new WP_Query( $args );
@@ -129,7 +142,8 @@ value="page"
 		<td><select id="<?php _e( $this->get_field_id( 'page_id' ) ); ?>" name="<?php _e( $this->get_field_name( 'page_id' ) ); ?>">
 			<option value=""><?php _e( esc_attr( __( 'Select page' ) ) ); ?></option>
 <?php foreach( $pages as $page ) { ?>
-			<option value="<?php _e( $page->ID ); ?>" <?php _e( ($page->ID == $instance['page_id'])?'selected="selected"':'' ); ?>><?php _e( $page->post_title ); ?></option>
+			<option value="<?php _e( $page->ID ); ?>" <?php _e( ($page->ID == $instance['page_id'])?'selected="selected"':'' ); ?>><?php
+_e( $page->post_title ); ?></option>
 <?php } ?>
 		</select></td>
 	</tr>
@@ -147,7 +161,8 @@ value="manual"
 		<td><select id="<?php _e( $this->get_field_id( 'bookmark_id' ) ); ?>" name="<?php _e( $this->get_field_name( 'bookmark_id' ) ); ?>">
 			<option value=""><?php _e( esc_attr( __( 'Select link' ) ) ); ?></option>
 <?php foreach( $links as $link ) { ?>
-			<option value="<?php _e( $link->ID ); ?>" <?php _e( ($link->ID == $instance['bookmark_id'])?'selected="selected"':'' ); ?>><?php _e( $page->post_title ); ?></option>
+			<option value="<?php _e( $link->ID ); ?>" <?php _e( ($link->ID == $instance['bookmark_id'])?'selected="selected"':'' ); ?>><?php
+_e( $link->link_name ); ?></option>
 <?php } ?>
 		</select></td>
 	</tr>
@@ -163,5 +178,4 @@ value="manual"
 	}
 }
 add_action('widgets_init', array ('Widget_Pages_Navigation', 'register'));
-
 ?>
