@@ -61,12 +61,21 @@ class Widget_Pages_Navigation extends WP_Widget {
 
 		// Process children
 		if( 'page' == $instance['link_type'] ) {
-			$children = get_page_children( get_page( $instance['page_id'] ) );
+			$p_id = $instance['page_id']; // Parent's page ID
+			_e( "<!-- Getting children -->" );
+			$children = get_pages( array(
+				'child_of' => $p_id,
+				'parent' => $p_id,
+				'sort_column' => 'menu_order',
+			) );
+
+			//	get_page( $instance['page_id'] ) );
 			foreach( $children as $child ) {
 				_e( "<li>" );
 				_e( '<a href="' . get_page_link( $child->ID ) . '">' . $child->post_title . '</a>' );
 				_e( "</li>" );
 			}
+			_e( "<!-- / children -->" );
 		}
 
 		/* REQUIRED */
