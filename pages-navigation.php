@@ -49,17 +49,18 @@ class Widget_Pages_Navigation extends WP_Widget {
 
 		if( 'page' == $instance['link_type'] ) {
 			// Page
-			$link_text = $instance['page_id']->post_title;
+			$link_text = get_page( $instance['page_id'] )->post_title;
 			//$link_text = trim( strip_tags( $instance['page_id']->post_title ) );
 			$link_url = get_page_link( $instance['page_id'] );
 		} else {
 			// Link
-			$link_text = $instance['bookmark_id']->link_name;
+			echo
+			$link_text = get_bookmark_field( 'link_name', $instance['bookmark_id' );
 			$link_url = get_bookmark_field( 'link_url', $instance['bookmark_id'] );
 		}
 
 echo "<!-- Link -->";
-		echo '<a href=' . $link_url . '>' . $link_text . '</a>';
+		echo '<a href="' . $link_url . '">' . $link_text . '</a>';
 echo "<!-- /Link -->";
 		// TODO: children here
 		echo '</li>';
