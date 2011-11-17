@@ -3,7 +3,7 @@ Contributors: bryanhanks
 Tags: pages, navigation, automatic
 Requires at least: 3.2.1
 Tested up to: 3.2.1
-Stable tag: trunk
+Stable tag: master
 
 Enables you to create navigation to your pages, with automatic drop-downs to sub-pages.
 
@@ -68,13 +68,16 @@ if (
 
 == Changelog ==
 
+= 1.01 =
+* Fixed plugin site link
+
 = 1.0 =
 * Initial release
 
 = 0.5 =
-Alpha release
+* Alpha release
 
 == Upgrade Notice ==
 
-= 1.0 =
-This is the first stable release.
+= 1.01 =
+* Cosmetic change in plugin management page

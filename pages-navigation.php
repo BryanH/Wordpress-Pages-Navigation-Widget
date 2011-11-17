@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Pages Navigation Widget
-Plugin URI: http://github.com/BryanH/Pages-Navigation
+Plugin URI: http://github.com/BryanH/Wordpress-Pages-Navigation-Widget
 Description: Creates drop-down navigation of select pages
-Version: 1.0
+Version: 1.01
 Author: HBJitney, LLC
 Author URI: http://hbjitney.com
 License:

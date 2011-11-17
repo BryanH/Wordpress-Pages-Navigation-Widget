@@ -7,7 +7,7 @@
 
 **Tested up to:** 3.2.1
 
-**Stable tag:** trunk
+**Stable tag:** master
 
 Enables you to create navigation to your pages, with automatic drop-downs to sub-pages.
 
@@ -68,9 +68,12 @@ if (
 
 ## Screenshots
 
-1. Widget configuration page
+![Widget configuration page](raw/master/screenshot-1.png)
 
 ## Changelog
+
+### 1.01
+* Fixed plugin site link
 
 ### 1.0
 * Initial release
@@ -80,6 +83,6 @@ if (
 
 ## Upgrade Notice
 
-### 1.0
-* This is the first stable release.
+### 1.01
+* Cosmetic change in plugin management page
 
