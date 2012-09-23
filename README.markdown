@@ -72,6 +72,9 @@ if (
 
 ## Changelog
 
+### 1.10
+* Added Category as a menu option
+
 ### 1.01
 * Fixed plugin site link
 
