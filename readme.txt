@@ -2,16 +2,16 @@
 Contributors: bryanhanks
 Tags: pages, navigation, automatic
 Requires at least: 3.2.1
-Tested up to: 3.2.1
-Stable tag: master
-
+Tested up to: 3.4.2
+Stable tag: trunk
+License: GPLv3
 Enables you to create navigation to your pages, with automatic drop-downs to sub-pages.
 
 == Description ==
 
 This plugin creates a widget that allows you to specify a page or link as a navigation item. Child pages are loaded as a drop-down menu below the parent.
 
-It is possible to mix-and-match any number of pages and/links in your navigation bar. Simply drop new widgets for each item.
+It is possible to mix-and-match any number of pages and/links in your widget sidebar. Simply drop new widgets for each item.
 
 If you wish to reorder the navigation, simply drag-drop the widgets. Child pages are ordered using the value in the child page's menu order field.
 
@@ -60,13 +60,19 @@ if (
 
 ...`
 
-*Note:* A page's children will be wrapped in an unordered list (this cannot be changed for now).
+*Note:* A page's children will be wrapped in an unordered list.
 
 == Screenshots ==
 
 1. Widget configuration page
 
 == Changelog ==
+
+= 1.10 =
+* Added Category as a menu option
+* Cleaned up code
+* Fixed some minor bugs
+* Removed unused files and directories
 
 = 1.01 =
 * Fixed plugin site link

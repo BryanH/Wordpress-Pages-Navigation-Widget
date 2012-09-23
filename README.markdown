@@ -5,7 +5,7 @@
 
 **Requires at least:** 3.2.1
 
-**Tested up to:** 3.2.1
+**Tested up to:** 3.4.2
 
 **Stable tag:** master
 
@@ -74,6 +74,9 @@ if (
 
 ### 1.10
 * Added Category as a menu option
+* Cleaned up code
+* Fixed some minor bugs
+* Removed unused files and directories
 
 ### 1.01
 * Fixed plugin site link
