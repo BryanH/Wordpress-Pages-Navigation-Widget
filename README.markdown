@@ -68,7 +68,7 @@ if (
 
 ## Screenshots
 
-![Widget configuration page](master/screenshot-1.png?raw=true)
+![Widget configuration page](screenshot-1.png?raw=true)
 
 ## Changelog
 
