@@ -48,8 +48,8 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 						/* 'before' and 'after' are REQUIRED */
 
 						// Display title, if it exists
-						$widget_title = apply_filters('widget_title', $instance['title'] );
-						if( $widget_title ) {
+						$title = apply_filters('widget_title', $instance['title'] );
+						if( $title ) {
 							_e( $before_title . $title . $after_title );
 						}
 
@@ -118,6 +118,8 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 				 * Widget options form
 				 */
 				function form($instance) {
+						wp_enqueue_script("jquery");
+
 						if( $instance ) {
 								$title = esc_attr( $instance['title'] );
 						} else {
@@ -154,6 +156,7 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 							, 'order' => 'name'
 							, 'name' => 'select_name'
 							, 'hierarchical' => true
+							, 'echo' => 0
 						);
 ?>
 	<table width="100%" summary="Formatting">
@@ -175,7 +178,7 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><select id="<?php _e( $this->get_field_id( 'page_id' ) ); ?>" name="<?php _e( $this->get_field_name( 'page_id' ) ); ?>">
+			<td><select id="<?php _e( $this->get_field_id( 'page_id' ) ); ?>" onchange="jQuery('#<?php _e( $this->get_field_id( 'page' ) ) ?>').prop('checked', true)" name="<?php _e( $this->get_field_name( 'page_id' ) ); ?>">
 				<option value=""><?php _e( esc_attr( __( 'Select page' ) ) ); ?></option>
 	<?php foreach( $pages as $page ) { ?>
 	<option value="<?php _e( $page->ID ); ?>" <?php _e( ($page->ID == $instance['page_id'])?'selected="selected"':'' ); ?>><?php
@@ -189,10 +192,16 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 			<td><input type="radio"
 				id="<?php _e( $this->get_field_id( 'category' ) ); ?>"
 				name="<?php _e( $this->get_field_name( 'link_type' ) ); ?>"
-				value="page"
+				value="category"
 				<?php _e( ('category' == $instance['link_type'])?'checked="checked"':'' ); ?>" /></td>
 			<td>
-				<?php wp_dropdown_categories( $category_args ); ?>
+<?php
+$replace = "<select$1 onchange=\"jQuery('#" . $this->get_field_id( 'category' ) . "').prop('checked', true)\">";
+$category_select  = preg_replace( '#<select([^>]*)>#', $replace, wp_dropdown_categories( $category_args ) );
+_e( $category_select );
+?>
+
+				<!-- onchange="jQuery('#<?php $this->get_field_id( 'page' ) ?>').prop('checked', true)"  -->
 			</td>
 		</tr>
 	</table>
