@@ -5,7 +5,7 @@
 
 **Requires at least:** 3.2.1
 
-**Tested up to:** 3.4.2
+**Tested up to:** 4.2.2
 
 **Stable tag:** master
 
@@ -71,6 +71,9 @@ if (
 ![Widget configuration page](screenshot-1.png?raw=true)
 
 ## Changelog
+
+### 1.11
+* Tested on Wordpress 4.2.2
 
 ### 1.10
 * Added Category as a menu option
