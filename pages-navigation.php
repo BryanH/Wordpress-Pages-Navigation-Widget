@@ -3,7 +3,7 @@
  * Plugin Name: Pages Navigation Widget
  * Plugin URI: http://hbjitney.com/pages-navigation-widget.html
  * Description: Creates drop-down navigation of select pages
- * Version: 1.11
+ * Version: 1.21
  * Author: HBJitney, LLC
  * Author URI: http://hbjitney.com
  * License: GPL3
@@ -42,6 +42,7 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 				 */
 				function widget($args, $instance) {
 						extract($args);
+						_e( "<!-- Pages Navigation Widget by HBJitney, LLC -->");
 						/* REQUIRED */
 						_e( $before_widget );
 						/* 'before' and 'after' are REQUIRED */
@@ -53,10 +54,6 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 						case 'page':
 								$link_text = trim( strip_tags( get_page( $instance['page_id'] )->post_title ) );
 								$link_url = get_page_link( $instance['page_id'] );
-								break;
-						case 'link':
-								$link_text = trim( strip_tags( get_bookmark_field( 'link_name', $instance['bookmark_id'] ) ) );
-								$link_url = get_bookmark_field( 'link_url', $instance['bookmark_id'] );
 								break;
 						case 'category':
 								// TODO: stuff here
@@ -92,6 +89,8 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 
 						/* REQUIRED */
 						echo $after_widget;
+
+						_e( "<!-- /Pages Navigation Widget -->");
 				}
 				/**
 				 * Save/update settings
@@ -106,7 +105,6 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 						 */
 
 						$instance['page_id'] = $new_instance['page_id'];
-						$instance['bookmark_id'] = $new_instance['bookmark_id'];
 						$instance['category_id'] = $new_instance['category_id'];
 						$new_title = '';
 
@@ -114,8 +112,6 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 						case 'page':
 								$new_title = get_page( $instance['page_id'] )->post_title;
 								break;
-						case 'link':
-								$new_title = get_bookmark_field( 'link_name', $instance['bookmark_id'] );
 								break;
 						case 'category':
 								$new_title = "HARD CODED!!11";
@@ -147,50 +143,30 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 								'parent' => 0, // top level only
 								'post_status' => 'publish'
 						) );
-						$links = get_bookmarks();
 						$categories = get_ca
 ?>
 	<table width="100%" summary="Formatting">
-	<tr>
+		<tr>
 
-	<td><input type="radio"
-id="<?php _e( $this->get_field_id( 'page' ) ); ?>"
-name="<?php _e($this->get_field_name( 'link_type' ) ); ?>"
-value="page"
-<?php _e( ('page' == $instance['link_type'])?'checked="checked"':'' ); ?>" /></td>
-
-		<td><label for="<?php _e( $this->get_field_id( 'page' ) ); ?>"><?php _e('Page:'); ?></label></td>
-	</tr>
-	<tr>
-		<td></td>
-		<td><select id="<?php _e( $this->get_field_id( 'page_id' ) ); ?>" name="<?php _e( $this->get_field_name( 'page_id' ) ); ?>">
-			<option value=""><?php _e( esc_attr( __( 'Select page' ) ) ); ?></option>
-<?php foreach( $pages as $page ) { ?>
-<option value="<?php _e( $page->ID ); ?>" <?php _e( ($page->ID == $instance['page_id'])?'selected="selected"':'' ); ?>><?php
-_e( $page->post_title ); ?></option>
-<?php } ?>
-		</select></td>
-	</tr>
-	<tr>
-
-	<td><input type="radio"
-id="<?php _e( $this->get_field_id( 'manual' ) ); ?>"
-name="<?php _e( $this->get_field_name( 'link_type' ) ); ?>"
-value="manual"
-<?php _e( ('manual' == $instance['link_type'])?'checked="checked"':'' ); ?>" /></td>
-
-		<td><label for="<?php _e( $this->get_field_id( 'manual' ) ); ?>"><?php _e( 'Manual Link:' ); ?></label></td>
-	<tr>
-		<td></td>
-		<td><select id="<?php _e( $this->get_field_id( 'bookmark_id' ) ); ?>" name="<?php _e( $this->get_field_name( 'bookmark_id' ) ); ?>">
-			<option value=""><?php _e( esc_attr( __( 'Select link' ) ) ); ?></option>
-<?php foreach( $links as $link ) { ?>
-<option value="<?php _e( $link->link_id ); ?>" <?php _e( ($link->link_id == $instance['bookmark_id'])?'selected="selected"':'' ); ?>><?php
-_e( $link->link_name ); ?></option>
-<?php } ?>
-		</select></td>
-	</tr>
+			<td><input type="radio"
+				id="<?php _e( $this->get_field_id( 'page' ) ); ?>"
+				name="<?php _e($this->get_field_name( 'link_type' ) ); ?>"
+				value="page"
+				<?php _e( ('page' == $instance['link_type'])?'checked="checked"':'' ); ?>" /></td>
+			<td><label for="<?php _e( $this->get_field_id( 'page' ) ); ?>"><?php _e('Page:'); ?></label></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><select id="<?php _e( $this->get_field_id( 'page_id' ) ); ?>" name="<?php _e( $this->get_field_name( 'page_id' ) ); ?>">
+				<option value=""><?php _e( esc_attr( __( 'Select page' ) ) ); ?></option>
+	<?php foreach( $pages as $page ) { ?>
+	<option value="<?php _e( $page->ID ); ?>" <?php _e( ($page->ID == $instance['page_id'])?'selected="selected"':'' ); ?>><?php
+	_e( $page->post_title ); ?></option>
+	<?php } ?>
+			</select></td>
+		</tr>
 	</table>
+
 	<input type="hidden" id="<?php
 _e( $this->get_field_id( 'title' ) ); ?>" name="<?php
 _e( $this->get_field_name( 'title' ) ); ?>" value="<?php
