@@ -48,9 +48,9 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 						/* 'before' and 'after' are REQUIRED */
 
 						// Display title, if it exists
-						$widget_title = apply_filters('widget_title', $instance['widget_title'] );
+						$widget_title = apply_filters('widget_title', $instance['title'] );
 						if( $widget_title ) {
-							_e( $before_title . $widget_title . $after_title );
+							_e( $before_title . $title . $after_title );
 						}
 
 						$link_text = 'Error';
@@ -109,23 +109,9 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 						 * widget config are not messed up (each drop-down gets
 						 * its own index).
 						 */
-						$instance['widget_title'] = $new_instance['widget_title'];
+						$instance['title'] = $new_instance['title'];
 						$instance['page_id'] = $new_instance['page_id'];
 						$instance['category_id'] = $new_instance['category_id'];
-						$new_title = '';
-
-						switch( $instance['link_type'] ) {
-						case 'page':
-								$new_title = get_page( $instance['page_id'] )->post_title;
-								break;
-						case 'category':
-								$new_title = "HARD CODED!!11";
-								break;
-						default:
-								throw new Exception('Trying to get title, got Invalid Link Type');
-						}
-
-						$instance['title'] = strip_tags( $new_title );
 						return $instance;
 				}
 				/**
@@ -148,17 +134,38 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 								'parent' => 0, // top level only
 								'post_status' => 'publish'
 						) );
-						$categories = get_ca
+
+						$category_args = array(
+							'type'                     => 'post',
+							'child_of'                 => 0,
+							'parent'                   => '',
+							'orderby'                  => 'name',
+							'order'                    => 'ASC',
+							'hide_empty'               => 0,
+							'hierarchical'             => 1,
+							'exclude'                  => '',
+							'include'                  => '',
+							'number'                   => '',
+							'taxonomy'                 => 'category',
+							'pad_counts'               => false
+						);
+						$category_args = array(
+							'hide_empty' => 0
+							, 'order' => 'name'
+							, 'name' => 'select_name'
+							, 'hierarchical' => true
+						);
 ?>
 	<table width="100%" summary="Formatting">
 		<tr>
-			<td><label for="<?php _e( $this->get_field_id( 'widget_title' ) ); ?>"><?php _e( 'Title:' ); ?></label></td>
-			<td><input type="text" id="<?php _e( $this->get_field_id( 'widget_title' ) ); ?>"
-				name="<?php _e( $this->get_field_name( 'widget_title' ) ); ?>"
-				value="<?php _e( $instance['widget_title'] ); ?>" /></td>
+			<td><label for="<?php _e( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:' ); ?></label></td>
+			<td><input type="text" id="<?php _e( $this->get_field_id( 'title' ) ); ?>"
+				name="<?php _e( $this->get_field_name( 'title' ) ); ?>"
+				value="<?php _e( $instance['title'] ); ?>" /></td>
 		</tr>
-		<tr>
 
+		<!-- Pages -->
+		<tr>
 			<td><input type="radio"
 				id="<?php _e( $this->get_field_id( 'page' ) ); ?>"
 				name="<?php _e( $this->get_field_name( 'link_type' ) ); ?>"
@@ -176,12 +183,19 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 	<?php } ?>
 			</select></td>
 		</tr>
-	</table>
 
-	<input type="hidden" id="<?php
-_e( $this->get_field_id( 'title' ) ); ?>" name="<?php
-_e( $this->get_field_name( 'title' ) ); ?>" value="<?php
-_e( $title ); ?>" />
+		<!-- Categories -->
+		<tr>
+			<td><input type="radio"
+				id="<?php _e( $this->get_field_id( 'category' ) ); ?>"
+				name="<?php _e( $this->get_field_name( 'link_type' ) ); ?>"
+				value="page"
+				<?php _e( ('category' == $instance['link_type'])?'checked="checked"':'' ); ?>" /></td>
+			<td>
+				<?php wp_dropdown_categories( $category_args ); ?>
+			</td>
+		</tr>
+	</table>
 <?php
 				}
 
