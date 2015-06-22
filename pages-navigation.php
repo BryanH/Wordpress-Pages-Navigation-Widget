@@ -3,7 +3,7 @@
  * Plugin Name: Pages Navigation Widget
  * Plugin URI: http://hbjitney.com/pages-navigation-widget.html
  * Description: Creates drop-down navigation of select pages
- * Version: 1.21
+ * Version: 1.22
  * Author: HBJitney, LLC
  * Author URI: http://hbjitney.com
  * License: GPL3
@@ -46,6 +46,12 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 						/* REQUIRED */
 						_e( $before_widget );
 						/* 'before' and 'after' are REQUIRED */
+
+						// Display title, if it exists
+						$widget_title = apply_filters('widget_title', $instance['widget_title'] );
+						if( $widget_title ) {
+							_e( $before_title . $widget_title . $after_title );
+						}
 
 						$link_text = 'Error';
 						$link_url = '/';
@@ -103,7 +109,7 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 						 * widget config are not messed up (each drop-down gets
 						 * its own index).
 						 */
-
+						$instance['widget_title'] = $new_instance['widget_title'];
 						$instance['page_id'] = $new_instance['page_id'];
 						$instance['category_id'] = $new_instance['category_id'];
 						$new_title = '';
@@ -111,7 +117,6 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 						switch( $instance['link_type'] ) {
 						case 'page':
 								$new_title = get_page( $instance['page_id'] )->post_title;
-								break;
 								break;
 						case 'category':
 								$new_title = "HARD CODED!!11";
@@ -147,10 +152,16 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 ?>
 	<table width="100%" summary="Formatting">
 		<tr>
+			<td><label for="<?php _e( $this->get_field_id( 'widget_title' ) ); ?>"><?php _e( 'Title:' ); ?></label></td>
+			<td><input type="text" id="<?php _e( $this->get_field_id( 'widget_title' ) ); ?>"
+				name="<?php _e( $this->get_field_name( 'widget_title' ) ); ?>"
+				value="<?php _e( $instance['widget_title'] ); ?>" /></td>
+		</tr>
+		<tr>
 
 			<td><input type="radio"
 				id="<?php _e( $this->get_field_id( 'page' ) ); ?>"
-				name="<?php _e($this->get_field_name( 'link_type' ) ); ?>"
+				name="<?php _e( $this->get_field_name( 'link_type' ) ); ?>"
 				value="page"
 				<?php _e( ('page' == $instance['link_type'])?'checked="checked"':'' ); ?>" /></td>
 			<td><label for="<?php _e( $this->get_field_id( 'page' ) ); ?>"><?php _e('Page:'); ?></label></td>
