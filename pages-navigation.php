@@ -62,35 +62,52 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 								$link_url = get_page_link( $instance['page_id'] );
 								break;
 						case 'category':
-								// TODO: stuff here
-								$link_text = "Some category (hard coded for now)";
-								$link_url = "http://www.im-hard-coded.com/";
+								$link_text = trim( strip_tags( get_category( $instance['category_id'] )->cat_name ) );
+								$link_url = get_category_link( $instance['category_id'] );
 								break;
 						default:
 								throw new Exception('Invalid Link Type');
 						}
 
+						// Display parent
 						_e( "<!-- Link for [" . $instance['link_type'] . "] -->" );
 						_e( '<a href="' . $link_url . '">' . $link_text . '</a>' );
 						_e( "<!-- /Link -->" );
 
 						// Process children
+
+						/* PAGES ***************/
 						if( 'page' == $instance['link_type'] ) {
-								$p_id = $instance['page_id']; // Parent's page ID
+							$p_id = $instance['page_id']; // Parent's page ID
+							_e( "<!-- Getting children -->" );
+							_e( "<ul>" );
+							$children = get_pages( array(
+								'child_of' => $p_id,
+								'parent' => $p_id,
+								'sort_column' => 'menu_order',
+							) );
+
+							foreach( $children as $child ) {
+								_e( '<li><a href="' . get_page_link( $child->ID ) . '">' . $child->post_title . '</a></li>' );
+							}
+							_e( "</ul>" );
+							_e( "<!-- / children -->" );
+						}
+
+						/* CATEGORIES ***********/
+						if( 'category' == $instance['link_type'] ) {
+							$c_id = $instance['category_id']; // Parent's category ID
 								_e( "<!-- Getting children -->" );
 								_e( "<ul>" );
-								$children = get_pages( array(
-										'child_of' => $p_id,
-										'parent' => $p_id,
-										'sort_column' => 'menu_order',
-								) );
 
-								//	get_page( $instance['page_id'] ) );
-								foreach( $children as $child ) {
-										_e( '<li><a href="' . get_page_link( $child->ID ) . '">' . $child->post_title . '</a></li>' );
-								}
+							/* Busted for now
+							$children = get_pages( array(
+								'child_of' => $p_id,
+								'parent' => $p_id,
+								'sort_column' => 'menu_order',
+							) );
+							*/
 								_e( "</ul>" );
-								_e( "<!-- / children -->" );
 						}
 
 						/* REQUIRED */
@@ -132,57 +149,49 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 								'category_id' => '-999',
 						);
 						$instance = wp_parse_args((array) $instance, $defaults);
+
 						$pages = get_pages( array (
 								'parent' => 0, // top level only
 								'post_status' => 'publish'
 						) );
 
 						$category_args = array(
-							'type'                     => 'post',
-							'child_of'                 => 0,
-							'parent'                   => '',
-							'orderby'                  => 'name',
-							'order'                    => 'ASC',
-							'hide_empty'               => 0,
-							'hierarchical'             => 1,
-							'exclude'                  => '',
-							'include'                  => '',
-							'number'                   => '',
-							'taxonomy'                 => 'category',
-							'pad_counts'               => false
-						);
-						$category_args = array(
 							'hide_empty' => 0
+							, 'show_option_none'   => esc_html__( "Select category" )
+							, 'option_none_value'  => '-1'
 							, 'order' => 'name'
-							, 'name' => 'select_name'
+							, 'id' => $this->get_field_id('category_id')
+							, 'name' => $this->get_field_name('category_id')
 							, 'hierarchical' => true
 							, 'echo' => 0
+							, 'selected' => $instance['category_id']
 						);
 ?>
 	<table width="100%" summary="Formatting">
 		<tr>
-			<td><label for="<?php _e( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:' ); ?></label></td>
-			<td><input type="text" id="<?php _e( $this->get_field_id( 'title' ) ); ?>"
-				name="<?php _e( $this->get_field_name( 'title' ) ); ?>"
-				value="<?php _e( $instance['title'] ); ?>" /></td>
+			<td><label for="<?php esc_attr_e( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title:' ); ?></label></td>
+			<td><input type="text" id="<?php esc_attr_e( $this->get_field_id( 'title' ) ); ?>"
+				name="<?php esc_attr_e( $this->get_field_name( 'title' ) ); ?>"
+				value="<?php esc_attr_e( $instance['title'] ); ?>" /></td>
 		</tr>
 
 		<!-- Pages -->
 		<tr>
 			<td><input type="radio"
-				id="<?php _e( $this->get_field_id( 'page' ) ); ?>"
-				name="<?php _e( $this->get_field_name( 'link_type' ) ); ?>"
+				id="<?php esc_attr_e( $this->get_field_id( 'page' ) ); ?>"
+				name="<?php esc_attr_e( $this->get_field_name( 'link_type' ) ); ?>"
 				value="page"
 				<?php _e( ('page' == $instance['link_type'])?'checked="checked"':'' ); ?>" /></td>
-			<td><label for="<?php _e( $this->get_field_id( 'page' ) ); ?>"><?php _e('Page:'); ?></label></td>
+			<td><label for="<?php esc_attr_e( $this->get_field_id( 'page' ) ); ?>"><?php esc_html_e('Page:'); ?></label></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><select id="<?php _e( $this->get_field_id( 'page_id' ) ); ?>" onchange="jQuery('#<?php _e( $this->get_field_id( 'page' ) ) ?>').prop('checked', true)" name="<?php _e( $this->get_field_name( 'page_id' ) ); ?>">
-				<option value=""><?php _e( esc_attr( __( 'Select page' ) ) ); ?></option>
+			<td><select id="<?php esc_attr_e( $this->get_field_id( 'page_id' ) ); ?>" onchange="jQuery('#<?php esc_attr_e( $this->get_field_id( 'page' ) ) ?>').prop('checked', true)" name="<?php _e( $this->get_field_name( 'page_id' ) ); ?>">
+				<option value=""><?php esc_attr_e( 'Select page' ); ?></option>
 	<?php foreach( $pages as $page ) { ?>
-	<option value="<?php _e( $page->ID ); ?>" <?php _e( ($page->ID == $instance['page_id'])?'selected="selected"':'' ); ?>><?php
-	_e( $page->post_title ); ?></option>
+	<option value="<?php esc_attr_e( $page->ID ); ?>"
+		<?php _e( ($page->ID == $instance['page_id'])?'selected="selected"':'' ); ?>><?php
+	esc_html_e( $page->post_title ); ?></option>
 	<?php } ?>
 			</select></td>
 		</tr>
@@ -190,8 +199,8 @@ if( !class_exists( 'Widget_Pages_Navigation' ) ) {
 		<!-- Categories -->
 		<tr>
 			<td><input type="radio"
-				id="<?php _e( $this->get_field_id( 'category' ) ); ?>"
-				name="<?php _e( $this->get_field_name( 'link_type' ) ); ?>"
+				id="<?php esc_attr_e( $this->get_field_id( 'category' ) ); ?>"
+				name="<?php esc_attr_e( $this->get_field_name( 'link_type' ) ); ?>"
 				value="category"
 				<?php _e( ('category' == $instance['link_type'])?'checked="checked"':'' ); ?>" /></td>
 			<td>
@@ -200,8 +209,6 @@ $replace = "<select$1 onchange=\"jQuery('#" . $this->get_field_id( 'category' ) 
 $category_select  = preg_replace( '#<select([^>]*)>#', $replace, wp_dropdown_categories( $category_args ) );
 _e( $category_select );
 ?>
-
-				<!-- onchange="jQuery('#<?php $this->get_field_id( 'page' ) ?>').prop('checked', true)"  -->
 			</td>
 		</tr>
 	</table>
